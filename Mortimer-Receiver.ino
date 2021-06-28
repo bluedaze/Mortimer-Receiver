@@ -3,12 +3,12 @@
 #include <NRFLite.h>
 #include "RadioPacket.h"
 #include "DebugUtils.h"
-const static uint8_t RADIO_ID = 0;       // Our radio's id.  The transmitter will send to this id.
-const static uint8_t PIN_RADIO_CE = 11;
-const static uint8_t PIN_RADIO_CSN = 12;
+const static uint8_t RADIO_ID = 0;
+const static uint8_t PIN_RADIO_CE = 12;
+const static uint8_t PIN_RADIO_CSN = 11;
 NRFLite _radio;
 RadioPacket _radioData;
-
+String messages[10];
 void setup()
 {
     serial_debugger(115200);
@@ -18,14 +18,12 @@ void setup()
 void loop() {
     printDebugInfo();
     uint32_t packetSize = _radio.hasData();
-    if (packetSize == sizeof(RadioPacket)) {
-        _radio.readData(&_radioData);
-
-        String msg = String(_radioData.Message);
-
-        Serial.print("Received '");
-        Serial.print(msg);
-        Serial.print("' from radio ");
-        Serial.println(_radioData.FromRadioId);
+    while(_radio.hasData()){
+        RadioPacket packet;
+        _radio.readData(&packet);
+        messages[packet.packetNumber] = packet.Message;
+        DEBUG_PRINTLN("Packet Number: " + String(packet.packetNumber));
+        DEBUG_PRINT("Message: ");
+        DEBUG_PRINTLN(messages[packet.packetNumber]);
     }
 }
