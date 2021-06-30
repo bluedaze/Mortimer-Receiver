@@ -1,3 +1,4 @@
+//#define DEBUG // Comment out to get rid of debug print statements.
 #include "Parser.h"
 #include "DebugUtils.h"
 int E1 = 5;     //M1 Speed Control
@@ -13,7 +14,7 @@ int M2 = 7;    //M1 Direction Control
 
 
     void Parser::startEngine(char a) {
-        DEBUG_PRINTLN("Starting engine");
+        DEBUG_PRINTLN("Starting engine...");
         analogWrite(E1, a);
         analogWrite(E2, a);
         digitalWrite(M1, HIGH);
@@ -21,6 +22,7 @@ int M2 = 7;    //M1 Direction Control
     }
 
     void Parser::turnRight (char a, char b) {
+        DEBUG_PRINTLN("Turning right...");
         analogWrite (E1, a);
         digitalWrite(M1, HIGH);
         analogWrite (E2, b);
@@ -28,6 +30,7 @@ int M2 = 7;    //M1 Direction Control
     }
 
     void Parser::turnLeft (char a, char b) {
+        DEBUG_PRINTLN("Turning left...");
         analogWrite (E1, a);
         digitalWrite(M1, LOW);
         analogWrite (E2, b);
@@ -35,7 +38,7 @@ int M2 = 7;    //M1 Direction Control
     }
 
     void Parser::Parser::stopEngine(void) {
-        DEBUG_PRINTLN("Stopping Engine");
+        DEBUG_PRINTLN("Stopping engine...");
         digitalWrite(E1, LOW);
         digitalWrite(E2, LOW);
     }
@@ -60,6 +63,7 @@ int M2 = 7;    //M1 Direction Control
     }
     
     void Parser::reverse (char a, char b) {
+      DEBUG_PRINTLN("Reversing engine...");
       analogWrite (E1, a);
       digitalWrite(M1, LOW);
       analogWrite (E2, b);
@@ -96,10 +100,10 @@ int M2 = 7;    //M1 Direction Control
             } else if (msg.tokens[index] == ";") {
                 index++;
             } else {
+                index++;
                 DEBUG_PRINTLN("Invalid input. "
                 "Commands are written in a noun verb structure."
                 "ie noun: 'engine' verb: 'start'");
-                index++;
                 break;
             }
         }

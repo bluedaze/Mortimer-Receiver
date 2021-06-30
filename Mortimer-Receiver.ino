@@ -1,4 +1,4 @@
-#define DEBUG
+//#define DEBUG // Comment out to get rid of debug print statements.
 #include <SPI.h>
 #include <NRFLite.h>
 #include "RadioPacket.h"
@@ -19,6 +19,15 @@ void setup() {
     checkRadioConnection();
 }
 
+void parseTokens(){
+    int str_len = str.length() + 1;
+    char char_array[str_len];
+    str.toCharArray(char_array, str_len);
+    Tokenizer tokens(char_array);
+    Parser parser(tokens.message, tokens.index);
+    str = "";
+}
+
 void loop() {
     printDebugInfo();
     uint32_t packetSize = _radio.hasData();
@@ -27,12 +36,11 @@ void loop() {
         _radio.readData(&packet);
         messages[packet.packetNumber] = packet.Message;
         DEBUG_PRINTLN("Packet Number: " + String(packet.packetNumber));
-        DEBUG_PRINT("Message: ");
+        DEBUG_PRINT("Packet: ");
         DEBUG_PRINTLN(messages[packet.packetNumber]);
         str+= packet.Message;
     }
     if(str.length() > 0){
-    Serial.print("Complete packet: ");
-    Serial.println(str);
+      parseTokens();     
     }
 }

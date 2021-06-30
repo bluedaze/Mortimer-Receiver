@@ -3,7 +3,6 @@
   Created by Sean Pedigo, June 25, 2021.
   Released into the public domain.
 */
-
 #include <NRFLite.h>
 #include "Arduino.h"
 #ifndef debugUtils_H
