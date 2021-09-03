@@ -91,6 +91,7 @@ int M2 = 7;    //M1 Direction Control
 
     void Parser::parseTokens() {
         while (index < tokens) {
+//            DEBUG_PRINT(msg.tokens[index])
             if (msg.tokens[index] == "engine") {
                 index++;
                 engineFuncs();
@@ -100,10 +101,11 @@ int M2 = 7;    //M1 Direction Control
             } else if (msg.tokens[index] == ";") {
                 index++;
             } else {
+//              DEBUG_PRINTLN("Broken");
+//                Serial.println("Invalid input. "
+//                "Commands are written in a noun verb structure."
+//                "ie noun: 'engine' verb: 'start'");
                 index++;
-                DEBUG_PRINTLN("Invalid input. "
-                "Commands are written in a noun verb structure."
-                "ie noun: 'engine' verb: 'start'");
                 break;
             }
         }

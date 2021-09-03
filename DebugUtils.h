@@ -12,7 +12,6 @@
           #define printDebugInfo() \
           { \
             if (millis() > lastCheck){ \
-              Serial.println(_radio.hasData()); \
               lastCheck = millis() + 1500; \
             } \
           }

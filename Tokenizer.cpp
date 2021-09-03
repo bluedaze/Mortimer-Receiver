@@ -1,6 +1,5 @@
 #include "Tokenizer.h"
 
-    
     Tokenizer::Tokenizer(char msg[]) {
         this -> msg = msg;
         getTokens();
@@ -23,6 +22,9 @@
         char c = msg[count];
         while (count < strlen(msg) +1) {
             if (isspace(c)) {
+//              if(isControl(c)){
+//                DEBUG_PRINT("Control character");
+//              }
                 skipWhitespace();
                 addToStack(str);
                 c = msg[count];
